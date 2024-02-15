@@ -1,15 +1,19 @@
 import React, { useState } from 'react'; // Importa React y useState para poder usar hooks
 import md5 from 'md5'; // Importa la librería md5 para generar el hash
 
-const BuscarPersonaje = ({ onBuscar }) => { // Recibe la función onBuscar como prop
-    const [nombrePersonaje, setNombrePersonaje] = useState('');// Inicializa el estado del input con una cadena vacía
+// Define la función BuscarPersonaje que recibe onBuscar como parámetro
+function BuscarPersonaje({ onBuscar }) {
+    // Inicializa el estado del input con una cadena vacía
+    const [nombrePersonaje, setNombrePersonaje] = useState('');
 
-    const clavePublica = 'f31a9d04d30464e549d7d6cd33972cb8'; // Clave pública
-    const clavePrivada = '2471a7465fc7cb8c034732fb6e009f163cc5cc02'; // Clave privada
+    // Clave pública y privada
+    const clavePublica = 'f31a9d04d30464e549d7d6cd33972cb8';
+    const clavePrivada = '2471a7465fc7cb8c034732fb6e009f163cc5cc02';
 
-    const manejarBusqueda = async () => {
+    // Función para manejar la búsqueda del personaje
+    async function manejadorBuscar() {
         try {
-            const ts = 1000 // Genera un timestamp para usar como parte del hash
+            const ts = 1000; // Genera un timestamp para usar como parte del hash
             const timestamp = "&ts=" + ts; // Genera un timestamp para usar como parte del hash
             const hash = md5(`${ts}${clavePrivada}${clavePublica}`); // Genera el hash utilizando md5, combinando el timestamp, la clave privada y la clave pública
 
@@ -28,8 +32,9 @@ const BuscarPersonaje = ({ onBuscar }) => { // Recibe la función onBuscar como 
         } catch (error) { // Maneja cualquier error que pueda ocurrir
             console.error('Error buscando personaje:', error); // Imprime el error en la consola
         }
-    };
+    }
 
+    // Devuelve el JSX que representa el componente BuscarPersonaje
     return (
         <div>
             <input
@@ -38,9 +43,10 @@ const BuscarPersonaje = ({ onBuscar }) => { // Recibe la función onBuscar como 
                 value={nombrePersonaje}
                 onChange={(event) => setNombrePersonaje(event.target.value)} // Actualiza el estado del input al cambiar el valor del input
             />
-            <button onClick={manejarBusqueda}>Buscar</button> {/* Agrega un botón para iniciar la búsqueda cuando se haga clic */}
+            <button onClick={manejadorBuscar}>Buscar</button> {/* Agrega un botón para iniciar la búsqueda cuando se haga clic */}
         </div>
     );
-};
+}
 
+// Exporta la función BuscarPersonaje como componente predeterminado
 export default BuscarPersonaje;

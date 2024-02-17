@@ -1,0 +1,10 @@
+.divInput {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.divInput input {
+    color: black;
+}

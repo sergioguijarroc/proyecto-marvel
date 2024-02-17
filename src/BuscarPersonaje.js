@@ -1,5 +1,8 @@
 import React, { useState } from 'react'; // Importa React y useState para poder usar hooks
 import md5 from 'md5'; // Importa la librería md5 para generar el hash
+import { InputMaterial } from './InputMaterial'; // Importa el componente InputMaterial desde su archivo
+import BotonBuscarPersonaje from './BotonBuscarPersonaje'; // Importa el componente BotonBuscarPersonaje desde su archivo
+import './BuscarPersonaje.css'; // Importa el archivo de estilos para el componente
 
 // Define la función BuscarPersonaje que recibe onBuscar como parámetro
 function BuscarPersonaje({ onBuscar }) {
@@ -13,7 +16,7 @@ function BuscarPersonaje({ onBuscar }) {
     // Función para manejar la búsqueda del personaje
     async function manejadorBuscar() {
         try {
-            const ts = 1000; // Genera un timestamp para usar como parte del hash
+            const ts = 1; // Genera un timestamp para usar como parte del hash
             const timestamp = "&ts=" + ts; // Genera un timestamp para usar como parte del hash
             const hash = md5(`${ts}${clavePrivada}${clavePublica}`); // Genera el hash utilizando md5, combinando el timestamp, la clave privada y la clave pública
 
@@ -36,14 +39,13 @@ function BuscarPersonaje({ onBuscar }) {
 
     // Devuelve el JSX que representa el componente BuscarPersonaje
     return (
-        <div>
-            <input
-                type="text"
+        <div className='divInput'>
+            <InputMaterial
                 placeholder="Ingrese el nombre del personaje"
                 value={nombrePersonaje}
                 onChange={(event) => setNombrePersonaje(event.target.value)} // Actualiza el estado del input al cambiar el valor del input
             />
-            <button onClick={manejadorBuscar}>Buscar</button> {/* Agrega un botón para iniciar la búsqueda cuando se haga clic */}
+            <BotonBuscarPersonaje onClick={manejadorBuscar} />
         </div>
     );
 }

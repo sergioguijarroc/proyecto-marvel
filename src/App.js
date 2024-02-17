@@ -1,9 +1,10 @@
-import logo from './logo.svg';
+
 import './App.css';
+import BuscarPersonaje from './BuscarPersonaje';
 
 function App() {
   return (
-    
+    <BuscarPersonaje />
   );
 }
 

@@ -14,7 +14,8 @@ function BuscarPersonaje({ onBuscar }) {
     const clavePrivada = '2471a7465fc7cb8c034732fb6e009f163cc5cc02';
 
     // Función para manejar la búsqueda del personaje
-    async function manejadorBuscar() {
+    async function manejadorBuscar(event) {
+
         try {
             const ts = 1; // Genera un timestamp para usar como parte del hash
             const timestamp = "&ts=" + ts; // Genera un timestamp para usar como parte del hash
@@ -28,9 +29,16 @@ function BuscarPersonaje({ onBuscar }) {
             }
 
             const datos = await respuesta.json(); // Convierte la respuesta en formato JSON
+            if (datos.data.results.length > 0) //Si tiene algo el array, significa que he encontrado el personaje
+            {
+                const datosPersonaje = datos.data.results[0]; // Guarda los datos del personaje en una variable
 
-            const datosPersonaje = datos.data.results[0]; // Guarda los datos del personaje en una variable
-            onBuscar(datosPersonaje); // Llama a la función onBuscar y pasa los datos del personaje
+                onBuscar(datosPersonaje); // Llama a la función onBuscar que está en el componente padre y le paso los datos del personaje
+
+            }
+            else {
+                alert("Error al buscar el personaje " + nombrePersonaje + ", verifica que esté bien escrito")
+            }
 
         } catch (error) { // Maneja cualquier error que pueda ocurrir
             console.error('Error buscando personaje:', error); // Imprime el error en la consola

@@ -8,3 +8,7 @@
 .divInput input {
     color: black;
 }
+
+.botonBuscarPersonaje {
+    margin-right: 10px;
+}

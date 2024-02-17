@@ -16,10 +16,15 @@ function App() {
     //Cambiar la visibilidad de CardPersonaje
   };
 
+  const borrarDatos = () => {
+    setDatosPersonaje(null);
+    setMostrarCard(false);
+  }
+
   return (
     <>
 
-      <BuscarPersonaje onBuscar={handleBuscar} />
+      <BuscarPersonaje devolverPersonaje={handleBuscar} borrarDatosPersonaje={borrarDatos} />
       {mostrarCard && <CardPersonaje datosPersonaje={datosPersonaje} />}
     </>
   );

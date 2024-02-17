@@ -3,9 +3,9 @@ import md5 from 'md5'; // Importa la librería md5 para generar el hash
 import { InputMaterial } from './InputMaterial'; // Importa el componente InputMaterial desde su archivo
 import BotonBuscarPersonaje from './BotonBuscarPersonaje'; // Importa el componente BotonBuscarPersonaje desde su archivo
 import './BuscarPersonaje.css'; // Importa el archivo de estilos para el componente
-
+import BotonBorrarHistorial from './BotonBorrarHistorial';
 // Define la función BuscarPersonaje que recibe onBuscar como parámetro
-function BuscarPersonaje({ onBuscar }) {
+function BuscarPersonaje({ devolverPersonaje, borrarDatosPersonaje }) {
     // Inicializa el estado del input con una cadena vacía
     const [nombrePersonaje, setNombrePersonaje] = useState('');
 
@@ -14,7 +14,7 @@ function BuscarPersonaje({ onBuscar }) {
     const clavePrivada = '2471a7465fc7cb8c034732fb6e009f163cc5cc02';
 
     // Función para manejar la búsqueda del personaje
-    async function manejadorBuscar(event) {
+    async function manejadorBuscar() {
 
         try {
             const ts = 1; // Genera un timestamp para usar como parte del hash
@@ -33,7 +33,7 @@ function BuscarPersonaje({ onBuscar }) {
             {
                 const datosPersonaje = datos.data.results[0]; // Guarda los datos del personaje en una variable
 
-                onBuscar(datosPersonaje); // Llama a la función onBuscar que está en el componente padre y le paso los datos del personaje
+                devolverPersonaje(datosPersonaje); // Llama a la función onBuscar que está en el componente padre y le paso los datos del personaje
 
             }
             else {
@@ -45,6 +45,12 @@ function BuscarPersonaje({ onBuscar }) {
         }
     }
 
+    function manejadorBorrar() {
+        borrarDatosPersonaje();
+        setNombrePersonaje("");
+
+    }
+
     // Devuelve el JSX que representa el componente BuscarPersonaje
     return (
         <div className='divInput'>
@@ -52,8 +58,12 @@ function BuscarPersonaje({ onBuscar }) {
                 placeholder="Ingrese el nombre del personaje"
                 value={nombrePersonaje}
                 onChange={(event) => setNombrePersonaje(event.target.value)} // Actualiza el estado del input al cambiar el valor del input
+                pulsarEnter={manejadorBuscar}
             />
-            <BotonBuscarPersonaje onClick={manejadorBuscar} />
+            <div className="botonBuscarPersonaje">
+                <BotonBuscarPersonaje onClick={manejadorBuscar} />
+            </div>
+            <BotonBorrarHistorial onClick={manejadorBorrar} />
         </div>
     );
 }
